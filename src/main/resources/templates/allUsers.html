@@ -7,15 +7,15 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Список пользователей!</title>
+    <title>Список пользователей</title>
 </head>
 <body>
-
+<div class="container">
 <h3>Список пользователей</h3>
 <br>
 
 
-<table class="table">
+    <table class="table table-striped">
     <thead>
     <tr>
         <th>First Name</th>
@@ -23,7 +23,10 @@
         <th>Username</th>
     </tr>
     </thead>
+
     <tbody>
+
+
     <tr th:each="user : ${userList}">
 <!--        <input type="hidden" name="userid" id="userId" th:value="${user.id}" />-->
         <td th:text="${user.firstName}"></td>
@@ -43,6 +46,7 @@
     </tr>
     </tbody>
 </table>
+</div>
 <a class="btn btn-primary" href="/addUser" role="button">Добавить пользователя</a>
 
                   </body>
