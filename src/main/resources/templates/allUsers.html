@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей!</title>
+</head>
+<body>
+
+<h3>Список пользователей</h3>
+<br>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Username</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userList}">
+<!--        <input type="hidden" name="userid" id="userId" th:value="${user.id}" />-->
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td th:text="${user.userName}"></td>
+        <td>
+            <form method="POST" th:action="@{/deleteUser}">
+                <input type="hidden" name="userid" id="userid" th:value="${user.id}" />
+                <button type="submit" name="submit" value="value" class="btn btn-warning">Delete</button>
+            </form>
+        </td>
+        <td>
+            <form method="GET" th:action="@{/editUser/{id}(id=${user.id})}">
+                <button type="submit" class="btn btn-warning">Edit</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a class="btn btn-primary" href="/addUser" role="button">Добавить пользователя</a>
+
+                  </body>
+</html>
