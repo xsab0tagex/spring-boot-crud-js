@@ -28,7 +28,7 @@
 <!--        <input type="hidden" name="userid" id="userId" th:value="${user.id}" />-->
         <td th:text="${user.firstName}"></td>
         <td th:text="${user.lastName}"></td>
-        <td th:text="${user.userName}"></td>
+        <td th:text="${user.username}"></td>
         <td>
             <form method="POST" th:action="@{/deleteUser}">
                 <input type="hidden" name="userid" id="userid" th:value="${user.id}" />

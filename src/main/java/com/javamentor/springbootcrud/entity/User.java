@@ -15,10 +15,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column (unique = true)
+    @Column(unique = true, name = "username")
     private String userName;
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "lastname")
     private String lastName;
+    @Column(name = "password")
     private String passWord;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
@@ -33,24 +36,22 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
     public Long getId() {
         return id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     public String getFirstName() {
         return firstName;
+    }
+
+    @Override
+    public String getPassword() {
+        return passWord;
+    }
+
+    @Override
+    public String getUsername() {
+        return userName;
     }
 
     public String getLastName() {
@@ -61,16 +62,20 @@ public class User implements UserDetails {
         this.firstName = firstName;
     }
 
-    public void setUserName(String userName) {
+    public void setUsername(String userName) {
         this.userName = userName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPassword(String passWord) {
+        this.passWord = passWord;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
@@ -82,16 +87,6 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return passWord;
-    }
-
-    @Override
-    public String getUsername() {
-        return userName;
     }
 
     @Override
