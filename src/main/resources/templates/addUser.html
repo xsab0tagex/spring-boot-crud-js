@@ -14,16 +14,16 @@
 
 <form th:action="@{/addUser}" th:object="${user}" method="post">
     <p>Имя: <label>
-        <input class="form-control" type="text" th:field="*{firstName}"/>
+        <input class="form-control" type="text" th:field="*{firstName}" required="required"/>
     </label></p>
     <p>Фамилия: <label>
-        <input class="form-control" type="text" th:field="*{lastName}"/>
+        <input class="form-control" type="text" th:field="*{lastName}" required="required"/>
     </label></p>
     <p>Логин: <label>
-        <input class="form-control" type="text" th:field="*{username}"/>
+        <input class="form-control" type="text" th:field="*{username}"required="required"/>
     </label></p>
     <p>Пароль: <label>
-        <input class="form-control" type="password" th:field="*{password}"/>
+        <input class="form-control" type="password" th:field="*{password}"required="required"/>
     </label></p>
     <button type="submit" class="btn btn-success">Добавить</button>
 </form>

@@ -1,5 +1,6 @@
 package com.javamentor.springbootcrud.entity;
 
+import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,10 +18,13 @@ public class User implements UserDetails {
 
     @Column(unique = true, name = "username")
     private String userName;
+    @NotNull
     @Column(name = "firstname")
     private String firstName;
+    @NotNull
     @Column(name = "lastname")
     private String lastName;
+    @NotNull
     @Column(name = "password")
     private String passWord;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
