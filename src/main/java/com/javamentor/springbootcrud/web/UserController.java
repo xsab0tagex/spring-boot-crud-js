@@ -66,17 +66,18 @@ public class UserController {
 
     @PostMapping(value = "/editUser/{id}")
     public String saveEditedUser(@ModelAttribute User user, @RequestParam("role") String[] role) {
-            Set<Role> new_roles = new HashSet<>();
-            user.setRoles(new_roles);
-            userService.updateUser(user);
-            if (Arrays.toString(role).contains("ROLE_ADMIN")) {
-                new_roles.add(roleRepository.getById(2L));
-            } else {
-                new_roles.add(roleRepository.getById(1L));
-            }
-            user.setRoles(new_roles);
-            userService.updateUser(user);
-            return "redirect:/allUsers";
+        Set<Role> new_roles = new HashSet<>();
+        user.setRoles(new_roles);
+        userService.updateUser(user);
+        if (Arrays.toString(role).contains("ROLE_ADMIN")) {
+            new_roles.add(roleRepository.getById(2L));
+        }
+        if (Arrays.toString(role).contains("ROLE_USER")) {
+            new_roles.add(roleRepository.getById(1L));
+        }
+        user.setRoles(new_roles);
+        userService.updateUser(user);
+        return "redirect:/allUsers";
     }
 
     @PostMapping(value = "/addUser")
@@ -90,11 +91,10 @@ public class UserController {
         return "redirect:/allUsers";
     }
 
-    private boolean isUsernameFree (String username) {
+    private boolean isUsernameFree(String username) {
         try {
-           return userRepository.getUserByName(username) == null;
-        }
-        catch (Exception e) {
+            return userRepository.getUserByName(username) == null;
+        } catch (Exception e) {
             return true;
         }
     }
