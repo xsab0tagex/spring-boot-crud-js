@@ -26,8 +26,8 @@
         <input class="form-control" type="text" th:field="*{password}" required="required"/>
     </label></p>
     <label>
-        <select name="role" class="browser-default custom-select">
-            <option value="ROLE_USER">ROLE_USER</option>
+        <select class="mdb-select md-form" id="role" name="role" multiple>
+            <option value="ROLE_USER" selected>ROLE_USER</option>
             <option value="ROLE_ADMIN">ROLE_ADMIN</option>
         </select>
 
