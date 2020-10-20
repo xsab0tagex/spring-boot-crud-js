@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -27,9 +28,11 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(value = "/allUsers")
-    public String displayAllUser(Model model) {
+    public String displayAllUser(Model model, Principal principal) {
         List<User> userList = userService.getAllUsers();
         model.addAttribute("userList", userList);
+        User curUser = userRepository.getUserByName(principal.getName());
+        model.addAttribute("currentUser", curUser );
         return "allUsers";
     }
 
