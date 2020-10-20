@@ -32,9 +32,11 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Имя</th>
                         <th>Фамилия</th>
-                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
                     </tr>
                     </thead>
 
@@ -42,9 +44,15 @@
 
 
                     <tr th:each="user : ${userList}">
+                        <td th:text="${user.id}"></td>
                         <td th:text="${user.firstName}"></td>
                         <td th:text="${user.lastName}"></td>
                         <td th:text="${user.username}"></td>
+                        <td>
+                        <th:block th:each="role : ${user.getRoles()}">
+                            <p th:utext="${role.name}">..</p>
+                        </th:block>
+                        </td>
                         <td>
                             <form method="POST" th:action="@{/deleteUser}">
                                 <input type="hidden" name="userid" id="userid" th:value="${user.id}"/>
