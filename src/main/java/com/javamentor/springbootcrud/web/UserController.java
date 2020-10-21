@@ -21,8 +21,8 @@ public class UserController {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+//    @Autowired
+//    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
@@ -31,7 +31,7 @@ public class UserController {
     public String displayAllUser(Model model, Principal principal) {
         List<User> userList = userService.getAllUsers();
         model.addAttribute("userList", userList);
-        User curUser = userRepository.getUserByName(principal.getName());
+        User curUser = userService.getUserByName(principal.getName());
         model.addAttribute("currentUser", curUser );
         return "allUsers";
     }
@@ -96,7 +96,7 @@ public class UserController {
 
     private boolean isUsernameFree(String username) {
         try {
-            return userRepository.getUserByName(username) == null;
+            return userService.getUserByName(username) == null;
         } catch (Exception e) {
             return true;
         }
