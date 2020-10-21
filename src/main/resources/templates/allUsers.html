@@ -35,118 +35,131 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark primary-color">
+    <div style="text-align: right">
+        <a href="/login?logout" class="button large">Logout</a>
+    </div>
+    <h2 class="text-center">User: <span th:text="${currentUser.username}"></span> with roles: <span th:text="${currentUser.getRoleName()}"></span></h2>
+</nav>
 
-<div class="container">
-    <ul class="nav nav-pills">
-        <li class="active"><a data-toggle="pill" href="#allUsers">Admin</a></li>
-        <li><a data-toggle="pill" href="#user">User</a></li>
-    </ul>
-
-    <div class="tab-content">
-        <div id="allUsers" class="tab-pane fade in active">
-            <h3>Список пользователей</h3>
-            <div class="container">
-                <h3 class="text-center text-info">
-                    Список пользователей
-                </h3>
-                <br>
-
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-
-                    <tr th:each="user : ${userList}">
-                        <td th:text="${user.id}"></td>
-                        <td th:text="${user.firstName}"></td>
-                        <td th:text="${user.lastName}"></td>
-                        <td th:text="${user.username}"></td>
-                        <td>
-                            <th:block th:each="role : ${user.getRoles()}">
-                                <p th:utext="${role.name}"></p>
-                            </th:block>
-                        </td>
-                        <td>
-                            <form method="POST" th:action="@{/deleteUser}">
-                                <input type="hidden" name="userid" id="userid" th:value="${user.id}"/>
-                                <button type="submit" name="submit" value="value" class="btn btn-warning">Delete
-                                </button>
-                            </form>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-info" data-toggle="modal"
-                                    data-target=".bd-example-modal-lg2"
-                                    th:href="@{/editUser/{id}(id=${user.id})}">
-                                Edit user
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="modal fade bd-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="EditUser"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-custom" role="document">
-                        <div class="modal-content modal-content-custom">
-                            <div class="modal-body">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn" data-toggle="modal" data-target=".bd-example-modal-lg"
-                        data-remote="/addUser">Добавить пользователя
-                </button>
-
-                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="AddNewUser"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-custom" role="document">
-                        <div class="modal-content modal-content-custom">
-                            <div class="modal-body">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a data-toggle="pill" href="#user">User</a></li>
+                <li><a data-toggle="pill" th:if="${currentUser.isAdmin()}" href="#allUsers">Admin</a></li>
+            </ul>
         </div>
-        <div id="user" class="tab-pane fade">
-            <div class="container">
-                <h3>Страница пользователя</h3>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                    </thead>
-                    <tr>
-                        <td th:text="${currentUser.id}"></td>
-                        <td th:text="${currentUser.firstName}"></td>
-                        <td th:text="${currentUser.lastName}"></td>
-                        <td th:text="${currentUser.username}"></td>
-                        <td>
-                            <th:block th:each="role : ${currentUser.getRoles()}">
-                                <p th:utext="${role.name}"></p>
-                            </th:block>
-                        </td>
-                    </tr>
-                </table>
+
+        <div class="col-md-10">
+            <div class="tab-content">
+                <div id="allUsers" class="tab-pane fade">
+                    <div class="container">
+                        <h3 class="text-center text-info">
+                            Список пользователей
+                        </h3>
+                        <br>
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Имя</th>
+                                <th>Фамилия</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                            <tr th:each="user : ${userList}">
+                                <td th:text="${user.id}"></td>
+                                <td th:text="${user.firstName}"></td>
+                                <td th:text="${user.lastName}"></td>
+                                <td th:text="${user.username}"></td>
+                                <td>
+                                    <th:block th:each="role : ${user.getRoles()}">
+                                        <p th:utext="${role.name}"></p>
+                                    </th:block>
+                                </td>
+                                <td>
+                                    <form method="POST" th:action="@{/deleteUser}">
+                                        <input type="hidden" name="userid" id="userid" th:value="${user.id}"/>
+                                        <button type="submit" name="submit" value="value" class="btn btn-warning">Delete
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                            data-target=".bd-example-modal-lg2"
+                                            th:href="@{/editUser/{id}(id=${user.id})}">
+                                        Edit user
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="modal fade bd-example-modal-lg2" tabindex="-1" role="dialog"
+                             aria-labelledby="EditUser"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-custom" role="document">
+                                <div class="modal-content modal-content-custom">
+                                    <div class="modal-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn" data-toggle="modal" data-target=".bd-example-modal-lg"
+                                data-remote="/addUser">Добавить пользователя
+                        </button>
+
+                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                             aria-labelledby="AddNewUser"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-custom" role="document">
+                                <div class="modal-content modal-content-custom">
+                                    <div class="modal-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="user" class="tab-pane fade in active">
+                    <div class="container">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Имя</th>
+                                <th>Фамилия</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>isAdmin</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td th:text="${currentUser.id}"></td>
+                                <td th:text="${currentUser.firstName}"></td>
+                                <td th:text="${currentUser.lastName}"></td>
+                                <td th:text="${currentUser.username}"></td>
+                                <td>
+                                    <th:block th:each="role : ${currentUser.getRoles()}">
+                                        <p th:utext="${role.name}"></p>
+                                    </th:block>
+                                <td th:text="${currentUser.isAdmin()}"></td>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
 </body>
 </html>

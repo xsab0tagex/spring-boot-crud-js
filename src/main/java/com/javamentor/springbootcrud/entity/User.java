@@ -1,12 +1,13 @@
 package com.javamentor.springbootcrud.entity;
 
-import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -108,5 +109,23 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean isAdmin() {
+        return getRoleName().contains("ROLE_ADMIN");
+    }
+
+    public String getRoleName() {
+        List<String> lst = getRoles()
+                .stream()
+                .map(Role::getName)
+                .collect(Collectors.toList());
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : lst
+        ) {
+            stringBuilder.append(s).append(",");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.lastIndexOf(","));
+        return stringBuilder.toString();
     }
 }
