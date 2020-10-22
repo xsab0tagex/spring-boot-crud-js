@@ -162,6 +162,13 @@
                                         <input class="form-control" type="password" th:field="*{password}"
                                                required="required"/>
                                     </label></p>
+                                    <label>
+                                        <select class="mdb-select md-form" id="newuserrole" name="newuserrole" multiple>
+                                            <option value="ROLE_USER" selected>ROLE_USER</option>
+                                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                                        </select>
+
+                                    </label>
                                     <button type="submit" class="btn btn-success">Добавить</button>
                                 </form>
                             </div>

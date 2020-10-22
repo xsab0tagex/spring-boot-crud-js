@@ -36,9 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean saveUser(User user) {
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.getById(1L));
-        user.setRoles(roles);
+//        Set<Role> roles = new HashSet<>();
+//        roles.add(roleRepository.getById(1L));
+//        user.setRoles(roles);
         try {
             userRepository.save(user);
             return true;
