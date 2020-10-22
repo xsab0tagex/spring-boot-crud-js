@@ -83,14 +83,7 @@ public class UserController {
     @PostMapping(value = "/addUser")
     public String saveNewUser(@ModelAttribute User user, @RequestParam("newuserrole") String[] newrole) {
         if (isUsernameFree(user.getUsername())) {
-            Set<Role> new_roles = new HashSet<>();
-            if (Arrays.toString(newrole).contains("ROLE_ADMIN")) {
-                new_roles.add(roleRepository.getById(2L));
-            }
-            if (Arrays.toString(newrole).contains("ROLE_USER")) {
-                new_roles.add(roleRepository.getById(1L));
-            }
-            user.setRoles(new_roles);
+            RestUserController.assignRoles(user, newrole, roleRepository);
             boolean isAdded = userService.saveUser(user);
             if (!isAdded) {
                 return "error";
