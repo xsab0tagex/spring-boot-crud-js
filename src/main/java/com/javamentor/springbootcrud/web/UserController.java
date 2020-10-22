@@ -3,7 +3,6 @@ package com.javamentor.springbootcrud.web;
 import com.javamentor.springbootcrud.entity.Role;
 import com.javamentor.springbootcrud.entity.User;
 import com.javamentor.springbootcrud.repository.RoleRepository;
-import com.javamentor.springbootcrud.repository.UserRepository;
 import com.javamentor.springbootcrud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,9 +20,6 @@ public class UserController {
     @Autowired
     private RoleRepository roleRepository;
 
-//    @Autowired
-//    private UserRepository userRepository;
-
     @Autowired
     private UserService userService;
 
@@ -33,6 +29,7 @@ public class UserController {
         model.addAttribute("userList", userList);
         User curUser = userService.getUserByName(principal.getName());
         model.addAttribute("currentUser", curUser );
+        model.addAttribute("newUser", new User());
         return "allUsers";
     }
 

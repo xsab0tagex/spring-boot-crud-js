@@ -1,5 +1,7 @@
 package com.javamentor.springbootcrud.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -30,6 +32,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
+    @JsonIgnore
     public Set<Role> getRoles() {
         return roles;
     }
@@ -92,29 +95,35 @@ public class User implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
 
+    @JsonIgnore
     public boolean isAdmin() {
         return getRoleName().contains("ROLE_ADMIN");
     }
 
+    @JsonIgnore
     public String getRoleName() {
         List<String> lst = getRoles()
                 .stream()

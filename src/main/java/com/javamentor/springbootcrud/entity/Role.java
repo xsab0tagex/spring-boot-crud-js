@@ -1,5 +1,7 @@
 package com.javamentor.springbootcrud.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ public class Role implements GrantedAuthority {
     @Column(name = "name")
     private String name;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private Set<User> users;
 
@@ -56,6 +59,7 @@ public class Role implements GrantedAuthority {
     }
 
     @Override
+    @JsonIgnore
     public String getAuthority() {
         return name;
     }
