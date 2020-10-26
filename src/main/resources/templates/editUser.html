@@ -39,22 +39,20 @@
 
         <script>
             async function edit(){
-                id = document.getElementById('id').value;
-                firstName = document.getElementById('efs').value;
-                lastName = document.getElementById('eln').value;
-                username = document.getElementById('eun').value;
-                password = document.getElementById('epw').value;
-                var editUsr = {
+                let id = document.getElementById('id').value;
+                let firstName = document.getElementById('efs').value;
+                let lastName = document.getElementById('eln').value;
+                let username = document.getElementById('eun').value;
+                let password = document.getElementById('epw').value;
+                let editUsr = {
                     id : id,
                     firstName : firstName,
                     lastName : lastName,
                     password : password,
                     username : username
                 };
-                console.log(editUsr);
-                var select = document.getElementById('role');
-                var rls = [];
-                rls = Array.from(select.selectedOptions).map(o => o.value);
+                let select = document.getElementById('role');
+                let rls = Array.from(select.selectedOptions).map(o => o.value);
                 await fetch('/update?roles='+rls, {
                     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
                     headers: {
