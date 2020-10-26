@@ -37,17 +37,19 @@
 
     </label>
         <script th:inline="javascript">
-            let usr = [[${user}]];
+            let editusr = [[${user}]];
 
-            async function edit(user){
+            async function edit(editusr){
                 var select = document.getElementById('role');
                 var rls = [];
                 rls = Array.from(select.selectedOptions).map(o => o.value);
+                alert(editusr);
+                alert(rls);
                 //TODO PUT запрос!
                 refresh();
             }
         </script>
-        <input type="button" data-dismiss="modal" class="btn btn-success" value="Отправить" onclick="edit(usr)" />
+        <input type="button" data-dismiss="modal" class="btn btn-success" value="Отправить" onclick="edit(editusr)" />
 </form>
 
 </div>

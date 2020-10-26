@@ -43,12 +43,12 @@ public class UserController {
         return "user";
     }
 
-    @GetMapping(value = "/addUser")
-    public String displayNewUserForm(Model model) {
-        model.addAttribute("headerMessage", "Введите данные пользователя");
-        model.addAttribute("user", new User());
-        return "addUser";
-    }
+//    @GetMapping(value = "/addUser")
+//    public String displayNewUserForm(Model model) {
+//        model.addAttribute("headerMessage", "Введите данные пользователя");
+//        model.addAttribute("user", new User());
+//        return "addUser";
+//    }
 
     @PostMapping(value = "/deleteUser")
     public String deleteUserById(@RequestParam("userid") Long id) {
@@ -79,24 +79,24 @@ public class UserController {
         userService.updateUser(user);
         return "redirect:/allUsers";
     }
-
-    @PostMapping(value = "/addUser")
-    public String saveNewUser(@ModelAttribute User user, @RequestParam("newuserrole") String[] newrole) {
-        if (isUsernameFree(user.getUsername())) {
-            RestUserController.assignRoles(user, newrole, roleRepository);
-            boolean isAdded = userService.saveUser(user);
-            if (!isAdded) {
-                return "error";
-            }
-        }
-        return "redirect:/allUsers";
-    }
-
-    private boolean isUsernameFree(String username) {
-        try {
-            return userService.getUserByName(username) == null;
-        } catch (Exception e) {
-            return true;
-        }
-    }
+//
+//    @PostMapping(value = "/addUser")
+//    public String saveNewUser(@ModelAttribute User user, @RequestParam("newuserrole") String[] newrole) {
+//        if (isUsernameFree(user.getUsername())) {
+//            RestUserController.assignRoles(user, newrole, roleRepository);
+//            boolean isAdded = userService.saveUser(user);
+//            if (!isAdded) {
+//                return "error";
+//            }
+//        }
+//        return "redirect:/allUsers";
+//    }
+//
+//    private boolean isUsernameFree(String username) {
+//        try {
+//            return userService.getUserByName(username) == null;
+//        } catch (Exception e) {
+//            return true;
+//        }
+//    }
 }
