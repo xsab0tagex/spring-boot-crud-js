@@ -27,8 +27,22 @@
         <p>Пароль: <label>
             <input class="form-control" type="password" th:field="*{password}" required="required"/>
         </label></p>
-        <button type="submit" class="btn btn-success">Добавить</button>
+        <button type="button" onclick="addNewUser(newusr)" class="btn btn-success">Добавить</button>
+
+        <script th:inline="javascript">
+            let newusr = [[${user}]];
+
+            async function addNewUser(user){
+                $('.nav-pills a[href="#adminPanel"]').tab('show');
+                var newselect = document.getElementById('role');
+                var newrls = [];
+                newrls = Array.from(newselect.selectedOptions).map(o => o.value);
+                //TODO POST запрос!
+                refresh();
+            }
+        </script>
     </form>
+
 </div>
 </body>
 
