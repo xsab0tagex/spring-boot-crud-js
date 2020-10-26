@@ -21,13 +21,13 @@
         <input class="form-control" id="efs" type="text" th:field="*{firstName}" required="required"/>
     </label></p>
     <p>Фамилия: <label>
-        <input class="form-control" type="text" th:field="*{lastName}" required="required"/>
+        <input class="form-control" id="eln" type="text" th:field="*{lastName}" required="required"/>
     </label></p>
     <p>Логин: <label>
-        <input class="form-control" type="text" th:field="*{username}" required="required"/>
+        <input class="form-control" id="eun"  type="text" th:field="*{username}" required="required"/>
     </label></p>
     <p>Пароль: <label>
-        <input class="form-control" type="text" th:field="*{password}" required="required"/>
+        <input class="form-control" id="epw" type="text" th:field="*{password}" required="required"/>
     </label></p>
     <label>
         <select class="mdb-select md-form" id="role" name="role" multiple>
@@ -36,20 +36,26 @@
         </select>
 
     </label>
-        <script th:inline="javascript">
-            let editusr = [[${user}]];
 
-            async function edit(editusr){
+        <script th:inline="javascript">
+            var editUsr = [[${user}]];
+        </script>
+        <script>
+            async function edit(){
+                editUsr.firstName = document.getElementById('efs').value;
+                editUsr.lastName = document.getElementById('eln').value;
+                editUsr.userName = document.getElementById('eun').value;
+                editUsr.passWord = document.getElementById('epw').value;
                 var select = document.getElementById('role');
                 var rls = [];
                 rls = Array.from(select.selectedOptions).map(o => o.value);
-                alert(editusr);
-                alert(rls);
                 //TODO PUT запрос!
+
+                alert(editUsr.firstName);
                 refresh();
             }
         </script>
-        <input type="button" data-dismiss="modal" class="btn btn-success" value="Отправить" onclick="edit(editusr)" />
+        <input type="button" data-dismiss="modal" class="btn btn-success" value="Отправить" onclick="edit(editUsr)" />
 </form>
 
 </div>

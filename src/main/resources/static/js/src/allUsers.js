@@ -7,20 +7,12 @@ async function deleteUser(id) {
         refresh();
 }
 
-async function adduser(user) {
-    await fetch('/user/' , {
-        method: 'POST',
-    })
-        .then(res => res.text()) // or res.json()
-        .then(res => console.log(res))
-    refresh();
-}
-
 jQuery(function ($) {
     refresh();
 })
 
 function refresh() {
+    $('.nav-pills a[href="#adminPanel"]').tab('show');
     document.getElementById("usrs").innerText = "";
     fetch('/users')
         .then(response => response.json())
