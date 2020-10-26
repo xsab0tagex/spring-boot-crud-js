@@ -14,10 +14,11 @@
 <div class="container">
     <h4 class="text-info">Редактирование пользователя
     </h4>
-<form th:action="@{/editUser/{id}(id=${user.id})}" th:object="${user}" method="post">
-    <input class="form-control" type="hidden" th:field="*{id}"/>
+<!--<form th:action="@{/editUser/{id}(id=${user.id})}" th:object="${user}" method="post">-->
+    <form th:object="${user}">
+    <input class="form-control" type="hidden" id="id" th:field="*{id}"/>
     <p>Имя: <label>
-        <input class="form-control" type="text" th:field="*{firstName}" required="required"/>
+        <input class="form-control" id="efs" type="text" th:field="*{firstName}" required="required"/>
     </label></p>
     <p>Фамилия: <label>
         <input class="form-control" type="text" th:field="*{lastName}" required="required"/>
@@ -35,9 +36,19 @@
         </select>
 
     </label>
-    <button type="submit" class="btn btn-success">Изменить</button>
-</form>
+        <script th:inline="javascript">
+            let usr = [[${user}]];
 
+            async function edit(user){
+                var select = document.getElementById('role');
+                var rls = [];
+                rls = Array.from(select.selectedOptions).map(o => o.value);
+                //TODO POST запрос!
+                refresh();
+            }
+        </script>
+        <input type="button" data-dismiss="modal" class="btn btn-success" value="Отправить" onclick="edit(usr)" />
+</form>
 
 </div>
 </body>

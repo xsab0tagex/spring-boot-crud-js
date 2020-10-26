@@ -7,6 +7,15 @@ async function deleteUser(id) {
         refresh();
 }
 
+async function adduser(user) {
+    await fetch('/user/' , {
+        method: 'POST',
+    })
+        .then(res => res.text()) // or res.json()
+        .then(res => console.log(res))
+    refresh();
+}
+
 jQuery(function ($) {
     refresh();
 })
@@ -30,6 +39,5 @@ function refresh() {
                     );
                     $('#usrs').append(ln);
                 })
-
         })
 }
