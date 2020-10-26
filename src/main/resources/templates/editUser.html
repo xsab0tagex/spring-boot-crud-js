@@ -37,25 +37,36 @@
 
     </label>
 
-        <script th:inline="javascript">
-            var editUsr = [[${user}]];
-        </script>
         <script>
             async function edit(){
-                editUsr.firstName = document.getElementById('efs').value;
-                editUsr.lastName = document.getElementById('eln').value;
-                editUsr.userName = document.getElementById('eun').value;
-                editUsr.passWord = document.getElementById('epw').value;
+                id = document.getElementById('id').value;
+                firstName = document.getElementById('efs').value;
+                lastName = document.getElementById('eln').value;
+                username = document.getElementById('eun').value;
+                password = document.getElementById('epw').value;
+                var editUsr = {
+                    id : id,
+                    firstName : firstName,
+                    lastName : lastName,
+                    password : password,
+                    username : username
+                };
+                console.log(editUsr);
                 var select = document.getElementById('role');
                 var rls = [];
                 rls = Array.from(select.selectedOptions).map(o => o.value);
-                //TODO PUT запрос!
-
-                alert(editUsr.firstName);
+                await fetch('/update?roles='+rls, {
+                    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(editUsr) // body data type must match "Content-Type" header
+                })
+                await (response => response.json());
                 refresh();
             }
         </script>
-        <input type="button" data-dismiss="modal" class="btn btn-success" value="Отправить" onclick="edit(editUsr)" />
+        <input type="button" data-dismiss="modal" class="btn btn-success" value="Отправить" onclick="edit()" />
 </form>
 
 </div>
