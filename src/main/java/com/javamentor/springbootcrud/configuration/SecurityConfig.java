@@ -1,6 +1,5 @@
 package com.javamentor.springbootcrud.configuration;
 
-import com.javamentor.springbootcrud.configuration.handler.SuccessUserHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -17,18 +16,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class  SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService; // сервис, с помощью которого тащим пользователя
-    private final SuccessUserHandler successUserHandler; // класс, в котором описана логика перенаправления пользователей по ролям
+    private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService, SuccessUserHandler successUserHandler) {
+    public SecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.successUserHandler = successUserHandler;
     }
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder()); // конфигурация для прохождения аутентификации
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -41,10 +38,9 @@ public class  SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/editUser/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/deleteUser/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/allUsers").access("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-                .antMatchers("/login").permitAll() // доступность всем
-                .and().formLogin()  // Spring сам подставит свою логин форму
+                .antMatchers("/login").permitAll()
+                .and().formLogin()
                 .defaultSuccessUrl("/allUsers", true);
-//                .successHandler(successUserHandler);// подключаем наш SuccessHandler для перенеправления по ролям
     }
 
     @Bean

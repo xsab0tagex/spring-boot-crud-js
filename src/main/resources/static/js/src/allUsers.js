@@ -12,7 +12,7 @@ jQuery(function ($) {
 })
 
 function refresh() {
-    $('.nav-pills a[href="#adminPanel"]').tab('show');
+     $('.nav-pills a[href="#adminPanel"]').tab('show');
     document.getElementById("usrs").innerText = "";
     fetch('/users')
         .then(response => response.json())
