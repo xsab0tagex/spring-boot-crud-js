@@ -1,0 +1,35 @@
+async function deleteUser(id) {
+    await fetch('/user/' + id, {
+        method: 'DELETE',
+    })
+        .then(res => res.text()) // or res.json()
+        .then(res => console.log(res))
+        refresh();
+}
+
+jQuery(function ($) {
+    refresh();
+})
+
+function refresh() {
+    document.getElementById("usrs").innerText = "";
+    fetch('/users')
+        .then(response => response.json())
+        .then(users => {
+            users.forEach(
+                user => {
+                    let uid = user.id;
+                    let ln = $('<tr><td>' + uid + '</td>' +
+                        '<td>' + user.firstName + '</td>' +
+                        '<td>' + user.lastName + '</td>' +
+                        '<td>' + user.username + '</td>' +
+                        '<td>' + user.role + '</td>' +
+                        '<td><button id="deleteButton" class="btn btn-info" type="button" onClick="deleteUser(\'' + uid + '\')" >Delete</button></td>' +
+                        '<td><button type="button" class="btn btn-info" data-toggle="modal" data-target=".bd-example-modal-lg2" href="/editUser/' + uid  +
+                        '">Edit user</button></td>'
+                    );
+                    $('#usrs').append(ln);
+                })
+
+        })
+}
